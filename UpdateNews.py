@@ -211,7 +211,9 @@ def read_gpt_config(file_path):
     config.read(file_path, encoding='utf-8')
     # 获取 GPT 配置
     use_gpt = config.get('gpt', 'use_gpt')
-    gpt_token = config.get('gpt', 'gpt_token')
+    gpt_token = os.getenv("OPENAI_API_KEY")
+    print(f"use_gpt:{use_gpt}")
+    print(f"gpt_token:{gpt_token}")
     return use_gpt, gpt_token
 
 
@@ -317,24 +319,23 @@ def read_notion_config(file_path):
     config = configparser.ConfigParser()
     # 读取配置文件
     config.read(file_path, encoding='utf-8')
-    # 获取 Notion 配置
-    token = config.get('notion', 'token')
-    page_url = config.get('notion', 'page_url')
     update_to_notion = config.getboolean('notion', 'update_to_notion')
-    return {'token': token, 'page_url': page_url, 'update_to_notion': update_to_notion}
+    return update_to_notion
 
 
 def update_notion_with_articles(df):
-    if not read_notion_config('config.ini')['update_to_notion']:
+    update_to_notion = read_notion_config('config.ini')
+    if not update_to_notion:
         return
+    # 获取 Notion 配置
+    token = os.getenv("NOTION_TOKEN")
+    print(f"token:{token}")
+    page_id = os.getenv("PAGE_ID")
+    print(f"page_id:{page_id}")
     # 初始化notion客户端和数据库ID
-    token = read_notion_config('config.ini')['token']
-    page_url = read_notion_config('config.ini')['page_url']
     notion = Client(auth=token)
-    database_id = read_notion_config('config.ini')['page_url']
-
     # 获取Notion数据库中所有页面的URL
-    existing_pages = notion.databases.query(database_id=database_id)
+    existing_pages = notion.databases.query(database_id=page_id)
     existing_urls = [page['properties']['文章链接']['url'] for page in existing_pages['results']]
     existing_titles= [page['properties']['文章标题']['title'][0]['text']['content'] for page in existing_pages['results']]
 
@@ -358,7 +359,7 @@ def update_notion_with_articles(df):
         # 调用Notion API创建页面
         try:
             new_page = notion.pages.create(
-                parent={"database_id": database_id},
+                parent={"page_id": page_id},
                 properties={
                     "文章日期": {  # 更新日期字段
                         "date": {"start": str(date)}
