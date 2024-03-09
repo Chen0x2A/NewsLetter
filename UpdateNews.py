@@ -398,20 +398,20 @@ def main():
     proxies = proxy_tester.get_some_proxies(3)  # 获取代理池
     print("可用代理池:" + str(proxies))
 
-    # # 历史对话列表
-    # history = []
-    #
-    # # 调用getArticle(),存到csv中
-    # for web in webList:
-    #     getArticle(web, keywords, proxies)  #
-    # # TODO 调用dataProcess(),读取csv，返回处理后的df
-    # df = dataProcess()
-    # # 调用gpt, 返回带有总结的df
-    # df = getSummary(df)
-    # # 保存为excel文件
-    # save_to_excel(df)
-    # # 更新到notion
-    # update_notion_with_articles(df)
+    # 历史对话列表
+    history = []
+
+    # 调用getArticle(),存到csv中
+    for web in webList:
+        getArticle(web, keywords, proxies)  #
+    # TODO 调用dataProcess(),读取csv，返回处理后的df
+    df = dataProcess()
+    # 调用gpt, 返回带有总结的df
+    df = getSummary(df)
+    # 保存为excel文件
+    save_to_excel(df)
+    # 更新到notion
+    update_notion_with_articles(df)
 
 
 if __name__ == "__main__":
