@@ -10,7 +10,8 @@
 note: 注意api用量, 可以先爬取一遍看一下文章数量, 然后再决定是否调用api. 如果要调用api, 重新跑一次UpdateNews.py即可.
 
 # 1. update to notion  (Option)
-1.1 确保config.ini中的 `update_to_notion` 参数为yes
+1.1 修改config.ini中的 `update_to_notion` 参数为yes
+
 1.2 设置NOTION_TOKEN环境变量
 
 进入https://www.notion.so/my-integrations, 新建一个名为newsLetter(或者其他名字)的integration, 获取这个integration的notion token, 设置本地环境变量`NOTION_TOKEN`为这个token.
