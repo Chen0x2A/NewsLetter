@@ -13,6 +13,7 @@ import numpy as np
 # from transformers import AutoTokenizer, AutoModel
 from datetime import datetime, timedelta
 
+import sys
 import proxy_tester
 import random
 import configparser
@@ -211,7 +212,7 @@ def read_gpt_config(file_path):
     config.read(file_path, encoding='utf-8')
     # 获取 GPT 配置
     use_gpt = config.get('gpt', 'use_gpt')
-    gpt_token = os.getenv("OPENAI_API_KEY")
+    # gpt_token = os.getenv("OPENAI_API_KEY")
     print(f"use_gpt:{use_gpt}")
     print(f"gpt_token:{gpt_token}")
     return use_gpt, gpt_token
@@ -328,9 +329,9 @@ def update_notion_with_articles(df):
     if not update_to_notion:
         return
     # 获取 Notion 配置
-    token = os.getenv("NOTION_TOKEN")
+    # token = os.getenv("NOTION_TOKEN")
     print(f"token:{token}")
-    page_id = os.getenv("PAGE_ID")
+    # page_id = os.getenv("PAGE_ID")
     print(f"page_id:{page_id}")
     # 初始化notion客户端和数据库ID
     notion = Client(auth=token)
@@ -384,6 +385,10 @@ def update_notion_with_articles(df):
 
 
 def main():
+    notion_token = sys.argv[1]
+    openai_api_key = sys.argv[2]
+    page_id = sys.argv[3]
+    print(notion_token, openai_api_key, page_id)
     # API密钥, 获得环境变量中的密钥
     # openai.api_key = os.getenv("OPENAI_API_KEY")
     webList = read_from_config_file('config.ini', 'web_list')  # 获取Web List
@@ -391,20 +396,20 @@ def main():
     proxies = proxy_tester.get_some_proxies(3)  # 获取代理池
     print("可用代理池:" + str(proxies))
 
-    # 历史对话列表
-    history = []
-
-    # 调用getArticle(),存到csv中
-    for web in webList:
-        getArticle(web, keywords, proxies)  #
-    # TODO 调用dataProcess(),读取csv，返回处理后的df
-    df = dataProcess()
-    # 调用gpt, 返回带有总结的df
-    df = getSummary(df)
-    # 保存为excel文件
-    save_to_excel(df)
-    # 更新到notion
-    update_notion_with_articles(df)
+    # # 历史对话列表
+    # history = []
+    #
+    # # 调用getArticle(),存到csv中
+    # for web in webList:
+    #     getArticle(web, keywords, proxies)  #
+    # # TODO 调用dataProcess(),读取csv，返回处理后的df
+    # df = dataProcess()
+    # # 调用gpt, 返回带有总结的df
+    # df = getSummary(df)
+    # # 保存为excel文件
+    # save_to_excel(df)
+    # # 更新到notion
+    # update_notion_with_articles(df)
 
 
 if __name__ == "__main__":
