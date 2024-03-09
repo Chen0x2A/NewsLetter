@@ -214,7 +214,7 @@ def read_gpt_config(file_path):
     use_gpt = config.get('gpt', 'use_gpt')
     # gpt_token = os.getenv("OPENAI_API_KEY")
     print(f"use_gpt:{use_gpt}")
-    print(f"gpt_token:{gpt_token}")
+    print(f"gpt_token:{openai_api_key}")
     return use_gpt, gpt_token
 
 
