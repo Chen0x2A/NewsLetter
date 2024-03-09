@@ -213,14 +213,12 @@ def read_gpt_config(file_path):
     # 获取 GPT 配置
     use_gpt = config.get('gpt', 'use_gpt')
     print(f"use_gpt:{use_gpt}")
-    print(f"gpt_token:{gpt_token}")
     return use_gpt
 
 
 def getSummary(df):
     # 读取 GPT 配置
-    use_gpt, gpt_token = read_gpt_config('config.ini')
-    openai.api_key = gpt_token
+    use_gpt = read_gpt_config('config.ini')
     # 检查是否需要使用 GPT
     if use_gpt != "yes" :
         return df
