@@ -212,10 +212,9 @@ def read_gpt_config(file_path):
     config.read(file_path, encoding='utf-8')
     # 获取 GPT 配置
     use_gpt = config.get('gpt', 'use_gpt')
-    # gpt_token = os.getenv("OPENAI_API_KEY")
     print(f"use_gpt:{use_gpt}")
-    print(f"gpt_token:{openai_api_key}")
-    return use_gpt, gpt_token
+    print(f"gpt_token:{gpt_token}")
+    return use_gpt
 
 
 def getSummary(df):
@@ -329,9 +328,9 @@ def update_notion_with_articles(df):
     if not update_to_notion:
         return
     # 获取 Notion 配置
-    # token = os.getenv("NOTION_TOKEN")
+    token = os.getenv("NOTION_TOKEN")
     print(f"token:{token}")
-    # page_id = os.getenv("PAGE_ID")
+    page_id = os.getenv("PAGE_ID")
     print(f"page_id:{page_id}")
     # 初始化notion客户端和数据库ID
     notion = Client(auth=token)
@@ -388,9 +387,12 @@ def main():
     notion_token = sys.argv[1]
     openai_api_key = sys.argv[2]
     page_id = sys.argv[3]
+    os.environ['NOTION_TOKEN'] = notion_token
+    # os.environ['OPENAI_API_KEY'] = openai_api_key
+    os.environ['PAGE_ID'] = page_id
     print(notion_token, openai_api_key, page_id)
     # API密钥, 获得环境变量中的密钥
-    # openai.api_key = os.getenv("OPENAI_API_KEY")
+    openai.api_key = openai_api_key
     webList = read_from_config_file('config.ini', 'web_list')  # 获取Web List
     keywords = read_from_config_file('config.ini', 'keywords')  # 获取要查找的关键词
     proxies = proxy_tester.get_some_proxies(3)  # 获取代理池
