@@ -37,8 +37,8 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: update news to notion
-      env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          GPT_TOKEN: ${{ secrets.OPENAI_API_KEY }}
-          PAGE_ID: ${{ secrets.PAGE_ID }}
       run: python UpdateNews.py
+      env:
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        GPT_TOKEN: ${{ secrets.OPENAI_API_KEY }}
+        PAGE_ID: ${{ secrets.PAGE_ID }}
