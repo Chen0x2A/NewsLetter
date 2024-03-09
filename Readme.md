@@ -32,7 +32,7 @@ newsLetter集成
 
 # 2. 部署到github action, 实现newsLetter功能
 
-2.1 pull本项目到你自己的仓库
+2.1 fork本项目到你自己的仓库
 
 2.2 在你的仓库中, 重新设置1.2,1.3中的环境变量, 让github action环境能够访问到它们. 注意, 在secret中设置, 而不是在环境变量中设置!!!不要暴露你的token!!!
 ![img.png](img.png)
