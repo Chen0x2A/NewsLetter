@@ -383,20 +383,20 @@ def update_notion_with_articles(df):
 
 
 def main():
-    print(f"{sys.argv}")
-    if len(sys.argv) >= 4:
-        notion_token = sys.argv[1]
-        openai_api_key = sys.argv[2]
-        page_id = sys.argv[3]
-        os.environ['NOTION_TOKEN'] = notion_token
-        os.environ['OPENAI_API_KEY'] = openai_api_key
-        os.environ['PAGE_ID'] = page_id
-        print(f"notion_token:{notion_token}")
-        print(f"openai_api_key:{openai_api_key}")
-        print(f"page_id:{page_id}")
+    # print(f"{sys.argv}")
+    # if len(sys.argv) >= 4:
+    #     notion_token = sys.argv[1]
+    #     openai_api_key = sys.argv[2]
+    #     page_id = sys.argv[3]
+    #     os.environ['NOTION_TOKEN'] = notion_token
+    #     os.environ['OPENAI_API_KEY'] = openai_api_key
+    #     os.environ['PAGE_ID'] = page_id
+    #     print(f"notion_token:{notion_token}")
+    #     print(f"openai_api_key:{openai_api_key}")
+    #     print(f"page_id:{page_id}")
 
     # API密钥, 获得环境变量中的密钥
-    openai_api_key = os.environ['OPENAI_API_KEY']
+    openai_api_key = os.getenv("OPENAI_API_KEY")
     # print(f"openai_api_key:{openai_api_key}")
     openai.api_key = openai_api_key
     webList = read_from_config_file('config.ini', 'web_list')  # 获取Web List
