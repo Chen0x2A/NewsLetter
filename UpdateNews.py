@@ -329,9 +329,9 @@ def update_notion_with_articles(df):
     token = os.getenv("NOTION_TOKEN")
     print(f"token:{token}")
     page_id = os.getenv("PAGE_ID")
-    print(f"page_id:{page_id}")
     # 初始化notion客户端和数据库ID
     notion = Client(auth=token)
+    print(f"notion:{notion}")
     # 获取Notion数据库中所有页面的URL
     existing_pages = notion.databases.query(database_id=page_id)
     existing_urls = [page['properties']['文章链接']['url'] for page in existing_pages['results']]
@@ -356,8 +356,9 @@ def update_notion_with_articles(df):
 
         # 调用Notion API创建页面
         try:
+            # print(f"正在使用page_id:{page_id}")
             new_page = notion.pages.create(
-                parent={"page_id": page_id},
+                parent={"database_id": page_id},
                 properties={
                     "文章日期": {  # 更新日期字段
                         "date": {"start": str(date)}
@@ -382,14 +383,16 @@ def update_notion_with_articles(df):
 
 
 def main():
-    notion_token = sys.argv[1]
-    openai_api_key = sys.argv[2]
-    page_id = sys.argv[3]
-    os.environ['NOTION_TOKEN'] = notion_token
-    # os.environ['OPENAI_API_KEY'] = openai_api_key
-    os.environ['PAGE_ID'] = page_id
-    print(notion_token, openai_api_key, page_id)
+    if len(sys.argv) >= 4:
+        notion_token = sys.argv[1]
+        openai_api_key = sys.argv[2]
+        page_id = sys.argv[3]
+        os.environ['NOTION_TOKEN'] = notion_token
+        os.environ['OPENAI_API_KEY'] = openai_api_key
+        os.environ['PAGE_ID'] = page_id
+
     # API密钥, 获得环境变量中的密钥
+    openai_api_key = os.environ['OPENAI_API_KEY']
     openai.api_key = openai_api_key
     webList = read_from_config_file('config.ini', 'web_list')  # 获取Web List
     keywords = read_from_config_file('config.ini', 'keywords')  # 获取要查找的关键词
