@@ -38,10 +38,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: update news to notion
       run: |
-          python UpdateNews.py "${{ vars.test1 }}" "${{ vars.test2 }}" "${{ vars.test3 }}"
           echo "test1 variable : $test1_var"
           echo "test2 variable : $test2_var"
           echo "test3 variable : $test3_var"
+          python UpdateNews.py "${{ vars.test1 }}" "${{ vars.test2 }}" "${{ vars.test3 }}"
       env:
           test1_var: ${{ vars.test1  }}
           test2_var: ${{ vars.test2 }}
