@@ -32,5 +32,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: update news to notion
       run: |
-        python UpdateNews.py
-  
+          python UpdateNews.py "${{ secrets.NOTION_TOKEN }}" "${{ secrets.OPENAI_API_KEY }}" "${{ secrets.PAGE_ID }}"
