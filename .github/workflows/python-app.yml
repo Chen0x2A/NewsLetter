@@ -14,6 +14,11 @@ on:
 permissions:
   contents: read
 
+env:
+    test1_var: ${{ vars.test1  }}
+    test2_var: ${{ vars.test2 }}
+    test3_var: ${{ vars.test3 }}
+
 jobs:
   build:
 
@@ -42,9 +47,5 @@ jobs:
           echo "test2 variable : $test2_var"
           echo "test3 variable : $test3_var"
           python UpdateNews.py "${{ vars.test1 }}" "${{ vars.test2 }}" "${{ vars.test3 }}"
-      env:
-          test1_var: ${{ vars.test1  }}
-          test2_var: ${{ vars.test2 }}
-          test3_var: ${{ vars.test3 }}
 #        python UpdateNews.py "${{ secrets.NOTION_TOKEN }}" "${{ secrets.OPENAI_API_KEY }}" "${{ secrets.PAGE_ID }}"
     
