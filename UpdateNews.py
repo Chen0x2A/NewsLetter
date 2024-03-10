@@ -326,7 +326,7 @@ def update_notion_with_articles(df):
     if not update_to_notion:
         return
     # 获取 Notion 配置
-    token = os.getenv("NOTION_TOKEN")
+    token = os.("NOTION_TOKEN")
     print(f"token:{token}")
     page_id = os.getenv("PAGE_ID")
     # 初始化notion客户端和数据库ID
@@ -393,6 +393,7 @@ def main():
 
     # API密钥, 获得环境变量中的密钥
     openai_api_key = os.environ['OPENAI_API_KEY']
+    # print(f"openai_api_key:{openai_api_key}")
     openai.api_key = openai_api_key
     webList = read_from_config_file('config.ini', 'web_list')  # 获取Web List
     keywords = read_from_config_file('config.ini', 'keywords')  # 获取要查找的关键词
@@ -402,17 +403,6 @@ def main():
     # 历史对话列表
     history = []
 
-    # 调用getArticle(),存到csv中
-    for web in webList:
-        getArticle(web, keywords, proxies)  #
-    # TODO 调用dataProcess(),读取csv，返回处理后的df
-    df = dataProcess()
-    # 调用gpt, 返回带有总结的df
-    df = getSummary(df)
-    # 保存为excel文件
-    save_to_excel(df)
-    # 更新到notion
-    update_notion_with_articles(df)
 
 
 if __name__ == "__main__":
