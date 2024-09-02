@@ -9,7 +9,7 @@ NOTE: 使用过程中有问题请提交issue.
 3.运行UpdateNews.py后, 当前路径下会生成relavant_articles.csv和relavant_articles.xlsx文件, 包含目前为止的爬取结果.
 
 
-# 1. update to notion  (Option)
+# 1. 将爬取到的文章同步到Notion  (Option)
 1.1 修改config.ini中的 `update_to_notion` 参数为yes
 
 1.2 设置NOTION_TOKEN环境变量
